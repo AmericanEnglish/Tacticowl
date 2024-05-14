@@ -80,7 +80,7 @@ namespace Tacticowl.DualWield
             string text = "DW_EquipOffHand".Translate(labelShort);
             if (equipment.def.IsRangedWeapon && pawn.story != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler))
             {
-                text += "EquipWarningBrawler".Translate();
+                text = $"{text} " + "EquipWarningBrawler".Translate();
             }
             return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(text, delegate
             {

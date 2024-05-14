@@ -54,7 +54,7 @@
 	<DW_HerHis_Female>her</DW_HerHis_Female>
 	<DW_EquipOffHand>Equip {0} (off-hand)</DW_EquipOffHand>
 	<DW_DropOffHand>Drop {0} (off-hand)</DW_DropOffHand>
-	<DW_AsOffHand>as off-hand weapon</DW_AsOffHand>
+	<DW_AsOffHand>{0} as off-hand weapon: {1}</DW_AsOffHand>
 	<DW_MissArmOrHand>Missing arm or hand</DW_MissArmOrHand>
 	<DW_WieldingTwoHanded>Wielding two-handed weapon</DW_WieldingTwoHanded>
 	<DW_NoTwoHandedInOffHand>Cannot wear two-handed weapon as off-hand</DW_NoTwoHandedInOffHand>
