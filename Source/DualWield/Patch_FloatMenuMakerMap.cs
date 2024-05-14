@@ -60,7 +60,6 @@ namespace Tacticowl.DualWield
                 if (pawn.equipment.Primary.def.IsTwoHanded())
                     return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "DW_WieldingTwoHanded".Translate()), null);
             }
-            else return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "DW_MissingPrimary".Translate()), null);
             
             if (equipment.def.IsWeapon && pawn.WorkTagIsDisabled(WorkTags.Violent))
                 return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "IsIncapableOfViolenceLower".Translate(pawn.LabelShort, pawn)), null);
@@ -81,7 +80,7 @@ namespace Tacticowl.DualWield
             string text = "DW_EquipOffHand".Translate(labelShort);
             if (equipment.def.IsRangedWeapon && pawn.story != null && pawn.story.traits.HasTrait(TraitDefOf.Brawler))
             {
-                text += "EquipWarningBrawler".Translate();
+                text = $"{text} " + "EquipWarningBrawler".Translate();
             }
             return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(text, delegate
             {
