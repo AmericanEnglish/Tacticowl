@@ -60,7 +60,6 @@ namespace Tacticowl.DualWield
                 if (pawn.equipment.Primary.def.IsTwoHanded())
                     return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "DW_WieldingTwoHanded".Translate()), null);
             }
-            else return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "DW_MissingPrimary".Translate()), null);
             
             if (equipment.def.IsWeapon && pawn.WorkTagIsDisabled(WorkTags.Violent))
                 return new FloatMenuOption("DW_AsOffHand".Translate(cannotEquipText, "IsIncapableOfViolenceLower".Translate(pawn.LabelShort, pawn)), null);
