@@ -41,7 +41,7 @@ namespace Tacticowl.DualWield
 
             if (DualWieldUtility.TryGetMeleeVerbOffHand(pawn, target, out Verb verb))
             {
-                return DualWieldUtility.TryStartOffHandAttack(pawn, target, __result) || __result;
+                return DualWieldUtility.TryStartOffHandAttack(pawn, target) || __result;
             }
             return __result;
         }
