@@ -19,19 +19,32 @@ namespace Tacticowl.DualWield
         
         static void Prefix( )
         {
-            Log.Message("CheckForAutoAttack");
+            // Log.Message("CheckForAutoAttack");
         }
 
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var tryStartBothAttacksMethod= AccessTools.Method(typeof(DualWieldUtility), nameof(DualWieldUtility.TryStartBothAttacks));
             var tryStartAttackMethod = AccessTools.Method(typeof(Pawn), nameof(Pawn.TryStartAttack));
-            instructions = instructions.MethodReplacer(
-                tryStartAttackMethod,
-                tryStartBothAttacksMethod
+            
+            var tryMeleeAttack = AccessTools.Method(
+                typeof(Pawn_MeleeVerbs), 
+                nameof(Pawn_MeleeVerbs.TryMeleeAttack)
             );
-            foreach (var instruction in instructions)  yield return instruction ;
+            var tryMeleeAttackBothHands = AccessTools.Method(
+                typeof(DualWieldUtility),
+                nameof(DualWieldUtility.TryMeleeAttackBothHands)
+            );
+            foreach (var instruction in instructions)
+                if (instruction.OperandIs(tryStartAttackMethod))
+                {
+                    yield return new CodeInstruction(OpCodes.Call, tryStartBothAttacksMethod);
+                }
+                else if (instruction.OperandIs(tryMeleeAttack))
+                {
+                    yield return new CodeInstruction(OpCodes.Call, tryMeleeAttackBothHands);
+                } else yield return instruction ;
         }
-
+    
     }
 }

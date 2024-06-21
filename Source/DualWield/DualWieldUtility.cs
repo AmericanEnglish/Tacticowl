@@ -94,5 +94,33 @@ namespace Tacticowl.DualWield
         {
             return !DualWieldUtility.CanAttackOffhand(pawn) && !DualWieldUtility.CanAttackMainHand(pawn);
         }
+        public static bool TryMeleeAttackOffhand(Pawn pawn, Thing target, Verb verbToUse, bool surpriseAttack)
+        {
+            if (!pawn.HasOffHand()) return false;
+
+            var stance = pawn.GetOffHandStance();
+            if (stance is Stance_Warmup_DW || stance is Stance_Cooldown || pawn.InMentalState) return false;
+
+            if (DualWieldUtility.TryGetMeleeVerbOffHand(pawn, target, out Verb verb))
+            {
+                return DualWieldUtility.TryStartOffHandAttack(pawn, target);
+            }
+            return false;
+        }
+
+        public static bool TryMeleeAttackBothHands(Pawn_MeleeVerbs pawn_meleeverbs, Thing target, Verb verbToUse = null, bool surpriseAttack = false)
+        {
+            // Log.Message("TryMeleeAttackBothHands");
+            bool mainHandAttack = pawn_meleeverbs.TryMeleeAttack(target, verbToUse, surpriseAttack);
+            Pawn pawn = pawn_meleeverbs.pawn;
+            bool offHandAttack = TryMeleeAttackOffhand(pawn, target, verbToUse, surpriseAttack);
+            return mainHandAttack || offHandAttack;
+        }
+        public static bool CurrentHandBusy(Pawn_StanceTracker instance, Verb verb)
+        {
+            if (instance.stunner.Stunned) return true;
+            if (verb.EquipmentSource.IsOffHandedWeapon()) return !verb.Available() || instance.pawn.GetOffHandStance().StanceBusy;
+            return instance.pawn.stances.curStance.StanceBusy;
+        }
     }
 }
